@@ -40,9 +40,6 @@ head df_WP048-cgi.txt
 CHR	POS	REF	ALT
 chr1	114716123	C	T
 chr9	5073770	G	T
-CHR	POS	REF	ALT
-chr1	114716123	C	T
-chr9	5073770	G	T
 ```
 
 **Enviar Job para Cancer Genome Interpreter (CGI) API.**
@@ -144,7 +141,7 @@ mkdir -p results/WP048
 import requests
 job_id ="21824131b57f9e93f90d"
 
-headers = {'Authorization': 'eder.fersou@gmail.com e0122907ce53686b5d72'}
+headers = {'Authorization': 'eder.fersou@gmail.com {SEU_TOKEN}'}
 payload={'action':'download'}
 r = requests.get('https://www.cancergenomeinterpreter.org/api/v1/%s' % job_id, headers=headers, params=payload)
 with open('/content/results/WP048/W048-cgi.zip', 'wb') as fd:
