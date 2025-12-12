@@ -1,7 +1,12 @@
 # Pipeline Somático
 Pipeline Somático - Do VCF (anotado) até o CGI Classificação
 
-**1. Clonar o git Lmabrasil-hg38**
+**1. Clonar o repositório GitHub lmabrasil-hg38**
+
+***Baixa para o ambiente do Google Colab todo o conteúdo do repositório GitHub.***
+
+***Isso permite acessar arquivos necessários para preparar os dados que serão enviados à API do Cancer Genome Interpreter (CGI).***
+
 
 ```bash
 ! git clone https://github.com/renatopuga/lmabrasil-hg38.git
@@ -18,7 +23,17 @@ Receiving objects: 100% (226/226), 8.63 MiB | 32.38 MiB/s, done.
 Resolving deltas: 100% (106/106), done.
 ```
 
-**Agora vá até o github Imabrasil-hg38 na seção USando CGI via API Rest no google Colab**
+**2. Preparar arquivo para envio ao CGI (API REST)**
+
+***cut -f1-4 -> Extrai apenas as colunas 1 a 4 do arquivo VEP.***
+
+***Essas colunas representam: CHROM, POS, REF e ALT.***
+
+***sed -e "s/CHROM/CHR/g" -> Substitui o nome da coluna CHROM por CHR, o CGI exige esse formato no arquivo de entrada.***
+
+***> df_WP048-cgi.txt -> Cria um novo arquivo somente com as informações necessárias para a API.***
+
+***head -> Lista as primeiras 10 linhas do arquivo para conferência.***
 
 ```bash
 %%bash
