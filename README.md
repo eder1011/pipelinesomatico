@@ -57,10 +57,19 @@ chr1	114716123	C	T
 chr9	5073770	G	T
 ```
 
-**Enviar Job para Cancer Genome Interpreter (CGI) API.**
+**3. Enviar Job para o CGI (Cancer Genome Interpreter).**
 >https://www.cancergenomeinterpreter.org/rest_api
 
-**Após filtrar apenas as colunas de interesse (CHR, POS, REF e ALT),  agora podemos enviar via REST-API as variantes somaticas da amostra WP048.**
+***Após filtrar apenas as colunas de interesse (CHR, POS, REF e ALT),  agora podemos enviar via REST-API as variantes somaticas da amostra WP048.***
+
+***headers -> Contém a sua credencial de acesso à API (email + token).***
+
+***payload -> Parâmetros enviados ao CGI: **cancer_type:** tipo tumoral, ex.: HEMATO; **title:** nome do job; **reference:** versão do genoma (hg38)***
+
+***files={'mutations': ...} -> Envia o arquivo com variantes para o CGI analisar.***
+
+***r.json() -> Exibe a resposta da API, normalmente contendo um job_id, que será necessário para consultar o progresso.***
+
 
 **NOTA:** Altere a variável {SEU-TOKEN} para o Token do CGI criado na sua conta.
 
@@ -82,7 +91,9 @@ r.json()
 21824131b57f9e93f90d
 ```
 
-**Status do JobID (Error, Runing, Done).**
+**4. Verificar o status do Job (Error, Runing, Done).**
+
+***Consulta o status do processamento: “running”, “queued”, “done”, “error”.***
 
 ```Python
 import requests
@@ -104,7 +115,10 @@ r.json()
   'date': '2025-12-06 14:05:18'}}
 ```
 
-**Log completo do JobID.**
+**5. Ver logs do JobID.**
+
+***Retorna informações internas sobre o processamento: erros, warnings, etapas concluídas.***
+
 
 ```Python
 import requests
@@ -135,7 +149,7 @@ r.json()
   '2025-12-06 15:05:33,302 INFO     Analysis done\n']}
 ```
 
-**Download dos Resultados**
+**6. Download dos resultados**
 
 ```
 Total de 4 arquivos de resultados:
@@ -147,11 +161,17 @@ input01.tsv:
 summary.txt:
 ```
 
+***Cria a pasta onde o resultado será armazenado.***
+
 ```bash
 %%bash
 #criar o diretorio com o ID da amostra dentro de results
 mkdir -p results/WP048
 ```
+
+***Download via API***
+***solicita ao CGI o pacote de resultados (ZIP) e salva o arquivo ZIP na pasta criada***
+
 ```Python
 import requests
 job_id ="21824131b57f9e93f90d"
@@ -163,7 +183,9 @@ with open('/content/results/WP048/W048-cgi.zip', 'wb') as fd:
     fd.write(r._content)
 ```
 
-**Descompactar o zip com os resultados**
+**7. Descompactar resultados**
+
+***Descompacta todo o conteúdo dentro da pasta results/WP048/.***
 
 ```bash
 unzip -o /content/results/WP048/W048-cgi.zip -d /content/results/WP048/
@@ -178,7 +200,10 @@ Archive:  /content/results/WP048/W048-cgi.zip
   inflating: /content/results/WP048/summary.txt
 ```
 
-**Instalar lib pandas pip install pandas**
+**8. Visualizar arquivo alterations.tsv**
+
+***Instalar pandas***
+
 ```bash
 !pip install pandas
 ```
@@ -193,6 +218,9 @@ Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.12/dist-
 Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.8.2->pandas) (1.17.0)
 ```
 
+***Ler a tabela***
+
+***Abre a tabela principal produzida pelo CGI e mostra as alterações interpretadas (driver / passenger, fármacos associados, etc.)***
 
 ```Python
 import pandas as pd
