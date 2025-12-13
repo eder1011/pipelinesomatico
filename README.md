@@ -236,3 +236,6 @@ pd.read_csv('/content/results/WP048/alterations.tsv',sep='\t',index_col=False, e
 
 Como criar uma tabela mais complexa em MarkDown
 >https://www.tablesgenerator.com/markdown_tables
+
+**Colab:**
+>https://colab.research.google.com/drive/12VNsF7hGw9qjJ5OUW4uz71WUy_tG4jGL
