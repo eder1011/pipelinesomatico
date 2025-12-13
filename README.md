@@ -155,7 +155,7 @@ r.json()
 Total de 4 arquivos de resultados:
 Definir cada um deles com base na documentação do CGI (TODOS):
 
-alterations.tsv: Detalha as variantes anotadas (biologia/driver);
+alterations.tsv: Detalha as variantes anotadas;
 biomarker.tsv: Biomarcadores de ação terapêutica com evidência clínica;
 input01.tsv: Entrada convertida e padronizada utilizada pelo CGI;
 summary.txt: Sumário geral da análise (status, nº de eventos, métricas).
